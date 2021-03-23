@@ -8,6 +8,8 @@ services:
     restart: always
     container_name: jeecg-boot-mysql
     image: jeecg-boot-mysql
+    volumes:
+      - /Volumes/seri/docker/mysql:/var/lib/mysql
     command:
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_general_ci
@@ -28,7 +30,6 @@ services:
   jeecg-boot-system:
     build:
       context: ./jeecg-boot-module-system
-    restart: always
     container_name: jeecg-boot-system
     image: jeecg-boot-system
     ports:

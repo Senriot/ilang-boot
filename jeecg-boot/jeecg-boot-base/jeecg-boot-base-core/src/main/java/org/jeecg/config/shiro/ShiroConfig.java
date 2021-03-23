@@ -131,6 +131,14 @@ public class ShiroConfig {
         //性能监控  TODO 存在安全漏洞
         //filterChainDefinitionMap.put("/actuator/**", "anon");
 
+        //获取设备排除
+        filterChainDefinitionMap.put("/ilang/device/queryById", "anon");
+        //获取系统参数
+        filterChainDefinitionMap.put("/ilang/sysParams/queryByCode", "anon");
+        //排除微信
+        filterChainDefinitionMap.put("/ilang/wx/**", "anon");
+        filterChainDefinitionMap.put("/ilang/record/**", "anon");
+
         // 添加自己的过滤器并且取名为jwt
         Map<String, Filter> filterMap = new HashMap<String, Filter>(1);
         //如果cloudServer为空 则说明是单体 需要加载跨域配置

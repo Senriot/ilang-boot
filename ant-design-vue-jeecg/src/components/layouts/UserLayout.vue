@@ -4,27 +4,29 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Jeecg Boot</span>
+            <img src="~@/assets/basicprofile.jpeg" style="border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;" class="logo" alt="logo">
+            <span class="title">壹浪后台管理</span>
           </a>
         </div>
         <div class="desc">
-          Jeecg Boot 是中国最具影响力的 企业级 快速开发平台
+          壹浪后台管理平台
         </div>
       </div>
 
-      <route-view></route-view>
+       <a-card style="width: 460px;margin:0 auto;">
+        <route-view></route-view>
+      </a-card>
 
-      <div class="footer">
-        <div class="links">
-          <a href="http://doc.jeecg.com" target="_blank">帮助</a>
-          <a href="https://github.com/zhangdaiscott/jeecg-boot" target="_blank">隐私</a>
-          <a href="https://github.com/zhangdaiscott/jeecg-boot/blob/master/LICENSE" target="_blank">条款</a>
-        </div>
-        <div class="copyright">
-          Copyright &copy; 2019 <a href="http://www.jeecg.com" target="_blank">JEECG开源社区</a> 出品
-        </div>
-      </div>
+<!--      <div class="footer">-->
+<!--        <div class="links">-->
+<!--          <a href="http://doc.jeecg.com" target="_blank">帮助</a>-->
+<!--          <a href="https://github.com/zhangdaiscott/jeecg-boot" target="_blank">隐私</a>-->
+<!--          <a href="https://github.com/zhangdaiscott/jeecg-boot/blob/master/LICENSE" target="_blank">条款</a>-->
+<!--        </div>-->
+<!--        <div class="copyright">-->
+<!--          Copyright &copy; 2019 <a href="http://www.jeecg.com" target="_blank">JEECG开源社区</a> 出品-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -65,7 +67,7 @@
     .container {
       width: 100%;
       min-height: 100%;
-      background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
+      background: #f0f2f5 url(~@/assets/bg-4.jpg) no-repeat 50%;
       background-size: 100%;
       padding: 110px 0 144px;
       position: relative;
@@ -100,7 +102,7 @@
 
           .title {
             font-size: 33px;
-            color: rgba(0, 0, 0, .85);
+            color: white;
             font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             font-weight: 600;
             position: relative;
@@ -109,7 +111,7 @@
         }
         .desc {
           font-size: 14px;
-          color: rgba(0, 0, 0, 0.45);
+          color: #cccccc;
           margin-top: 12px;
           margin-bottom: 40px;
         }

@@ -1,0 +1,15 @@
+package ${bussiPackage}.${entityPackage}.service;
+
+import ${bussiPackage}.${entityPackage}.entity.${entityName};
+import org.springframework.stereotype.Service
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+import ${bussiPackage}.${entityPackage}.mapper.${entityName}Mapper
+
+/**
+ * @Description: ${tableVo.ftlDescription}
+ * @Author: Allen
+ * @Date:   ${.now?string["yyyy-MM-dd"]}
+ * @Version: V1.0
+ */
+@Service
+class ${entityName}Service: ServiceImpl<${entityName}Mapper, ${entityName}>()

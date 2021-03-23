@@ -3,3 +3,21 @@ spring:
     name: jeecg-system
   profiles:
     active: @profile.name@
+
+
+wx:
+  miniapp:
+    appid: wxdc542e26e9909507
+    secret: e538aecbf0ca000347d346d107e43f8d
+    msg-data-format: JSON
+  mp:
+    app-id: wxeffdbcc9a8be88c7
+    secret: 6bc95a0a2e6b2976b64257d031e55190
+    aes-key: DAB388w1ZmtuH6Z9bka89tB1hWB1u38UbbqABzpu896
+    token: bM46Gg0466468ZqxmiyB7BM38mKmkWXD
+
+
+ilang:
+  upload:
+    url: http://aogevod.com/group1/upload
+    path: ilang/records
