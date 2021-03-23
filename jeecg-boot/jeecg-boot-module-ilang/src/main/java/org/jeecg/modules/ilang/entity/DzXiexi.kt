@@ -21,123 +21,129 @@ import java.util.*
 @ApiModel(value = "ilang_dz_xiexi对象", description = "党政学习")
 data class DzXiexi(
 
-    /**
-     * 主键
-     */
-    @TableId(type = IdType.ASSIGN_ID)
-    var id: String? = null,
-    /**
-     * 名称
-     */
-    @Excel(name = "名称", width = 15.0)
-    @ApiModelProperty(value = "名称")
-    var name: String? = null,
-    /**
-     * 拼音
-     */
-    @Excel(name = "拼音", width = 15.0)
-    @ApiModelProperty(value = "拼音")
-    var pinyin: String? = null,
-    /**
-     * 类别
-     */
-    @Excel(name = "类别", width = 15.0)
-    @ApiModelProperty(value = "类别")
-    @Dict(dicCode = "dz_type")
-    var type: String? = null,
-    /**
-     * 类别名称
-     */
-    @Excel(name = "类别名称", width = 15.0)
-    @ApiModelProperty(value = "类别名称")
-    var typeText: String? = null,
-    /**
-     * 封面图片
-     */
-    @Excel(name = "封面图片", width = 15.0)
-    @ApiModelProperty(value = "封面图片")
-    var pic: String? = null,
-    /**
-     * 内容文件
-     */
-    @Excel(name = "内容文件", width = 15.0)
-    @ApiModelProperty(value = "内容文件")
-    var contentFile: String? = null,
-    /**
-     * 字幕
-     */
-    @Excel(name = "字幕", width = 15.0)
-    @ApiModelProperty(value = "字幕")
-    var subtitle: String? = null,
-    /**
-     * 音频地址
-     */
-    @Excel(name = "音频地址", width = 15.0)
-    @ApiModelProperty(value = "音频地址")
-    var audioUrl: String? = null,
-    /**
-     * 背景图片
-     */
-    @Excel(name = "背景图片", width = 15.0)
-    @ApiModelProperty(value = "背景图片")
-    var bgPic: String? = null,
-    /**
-     * 阅读次数
-     */
-    @Excel(name = "阅读次数", width = 15.0)
-    @ApiModelProperty(value = "阅读次数")
-    var readCount: Int? = null,
-    /**
-     * 时长
-     */
-    @Excel(name = "时长", width = 15.0)
-    @ApiModelProperty(value = "时长")
-    var duration: String? = null,
-    /**
-     * 简介
-     */
-    @Excel(name = "简介", width = 15.0)
-    @ApiModelProperty(value = "简介")
-    var remark: String? = null,
-    /**
-     * 状态
-     */
-    @Excel(name = "状态", width = 15.0)
-    @ApiModelProperty(value = "状态")
-    @Dict(dicCode = "status")
-    var status: String? = null,
-    /**
-     * 创建人
-     */
-    @Excel(name = "创建人", width = 15.0)
-    @ApiModelProperty(value = "创建人")
-    var createBy: String? = null,
-    /**
-     * 创建日期
-     */
-    @Excel(name = "创建日期", width = 20.0, format = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "创建日期")
-    var createTime: Date? = null,
-    /**
-     * 更新人
-     */
-    @Excel(name = "更新人", width = 15.0)
-    @ApiModelProperty(value = "更新人")
-    var updateBy: String? = null,
-    /**
-     * 更新日期
-     */
-    @Excel(name = "更新日期", width = 20.0, format = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "更新日期")
-    var updateTime: Date? = null
-)
-{
-    companion object
-    {
+        /**
+         * 主键
+         */
+        @TableId(type = IdType.ASSIGN_ID)
+        var id: String? = null,
+        /**
+         * 名称
+         */
+        @Excel(name = "名称", width = 15.0)
+        @ApiModelProperty(value = "名称")
+        var name: String? = null,
+        /**
+         * 拼音
+         */
+        @Excel(name = "拼音", width = 15.0)
+        @ApiModelProperty(value = "拼音")
+        var pinyin: String? = null,
+        /**
+         * 类别
+         */
+        @Excel(name = "类别", width = 15.0)
+        @ApiModelProperty(value = "类别")
+        @Dict(dicCode = "dz_type")
+        var type: String? = null,
+
+        /**
+         * 媒体类别
+         */
+        @Excel(name = "媒体类别", width = 15.0)
+        @ApiModelProperty(value = "媒体类别")
+        @Dict(dicCode = "media_type")
+        var mediaType: String? = null,
+        /**
+         * 类别名称
+         */
+        @Excel(name = "类别名称", width = 15.0)
+        @ApiModelProperty(value = "类别名称")
+        var typeText: String? = null,
+        /**
+         * 封面图片
+         */
+        @Excel(name = "封面图片", width = 15.0)
+        @ApiModelProperty(value = "封面图片")
+        var pic: String? = null,
+        /**
+         * 内容文件
+         */
+        @Excel(name = "内容文件", width = 15.0)
+        @ApiModelProperty(value = "内容文件")
+        var contentFile: String? = null,
+        /**
+         * 字幕
+         */
+        @Excel(name = "字幕", width = 15.0)
+        @ApiModelProperty(value = "字幕")
+        var subtitle: String? = null,
+        /**
+         * 音频地址
+         */
+        @Excel(name = "音频地址", width = 15.0)
+        @ApiModelProperty(value = "音频地址")
+        var audioUrl: String? = null,
+        /**
+         * 背景图片
+         */
+        @Excel(name = "背景图片", width = 15.0)
+        @ApiModelProperty(value = "背景图片")
+        var bgPic: String? = null,
+        /**
+         * 阅读次数
+         */
+        @Excel(name = "阅读次数", width = 15.0)
+        @ApiModelProperty(value = "阅读次数")
+        var readCount: Int? = null,
+        /**
+         * 时长
+         */
+        @Excel(name = "时长", width = 15.0)
+        @ApiModelProperty(value = "时长")
+        var duration: String? = null,
+        /**
+         * 简介
+         */
+        @Excel(name = "简介", width = 15.0)
+        @ApiModelProperty(value = "简介")
+        var remark: String? = null,
+        /**
+         * 状态
+         */
+        @Excel(name = "状态", width = 15.0)
+        @ApiModelProperty(value = "状态")
+        @Dict(dicCode = "status")
+        var status: String? = null,
+        /**
+         * 创建人
+         */
+        @Excel(name = "创建人", width = 15.0)
+        @ApiModelProperty(value = "创建人")
+        var createBy: String? = null,
+        /**
+         * 创建日期
+         */
+        @Excel(name = "创建日期", width = 20.0, format = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @ApiModelProperty(value = "创建日期")
+        var createTime: Date? = null,
+        /**
+         * 更新人
+         */
+        @Excel(name = "更新人", width = 15.0)
+        @ApiModelProperty(value = "更新人")
+        var updateBy: String? = null,
+        /**
+         * 更新日期
+         */
+        @Excel(name = "更新日期", width = 20.0, format = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @ApiModelProperty(value = "更新日期")
+        var updateTime: Date? = null
+) {
+    companion object {
         const val COL_ID = "id"
         const val COL_NAME = "name"
         const val COL_PINYIN = "pinyin"

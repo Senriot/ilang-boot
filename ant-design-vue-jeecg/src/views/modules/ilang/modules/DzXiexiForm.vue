@@ -15,7 +15,7 @@
           </a-col>
           <a-col :span="24">
             <a-form-item label="类别" :labelCol="labelCol" :wrapperCol="wrapperCol">
-              <j-category-select v-decorator="['type']" pcode="dz_type" placeholder="请选择类别" back="type_text" @change="handleCategoryChange" />
+              <j-category-select v-decorator="['type']" pcode="dz_typeA02" placeholder="请选择类别" back="type_text" @change="handleCategoryChange" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -204,7 +204,7 @@
               that.confirmLoading = false;
             })
           }
-         
+
         })
       },
       popupCallback(row){

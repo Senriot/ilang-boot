@@ -198,7 +198,7 @@
           }
         ],
         url: {
-          list: "/ilang/dzXiexi/list",
+          list: "/ilang/dzXiexi/list/audio",
           delete: "/ilang/dzXiexi/delete",
           deleteBatch: "/ilang/dzXiexi/deleteBatch",
           exportXlsUrl: "/ilang/dzXiexi/exportXls",
