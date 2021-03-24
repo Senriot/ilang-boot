@@ -37,10 +37,10 @@ class DzXiexiController(private val dzXiexiService: DzXiexiService) : JeecgContr
      */
     @AutoLog(value = "党政学习-分页列表查询")
     @ApiOperation(value = "党政学习-分页列表查询", notes = "党政学习-分页列表查询")
-    @GetMapping(value = ["/list/{type}"])
+    @GetMapping(value = ["/list/{mediaType}"])
     fun queryPageList(
-            @PathVariable("type")
-            type:String,
+            @PathVariable("mediaType")
+            mediaType: String,
             dzXiexi: DzXiexi?,
             @RequestParam(name = "pageNo", defaultValue = "1")
             pageNo: Long = 1,
@@ -48,7 +48,7 @@ class DzXiexiController(private val dzXiexiService: DzXiexiService) : JeecgContr
             pageSize: Long = 10,
             req: HttpServletRequest
     ): Result<*> {
-        val queryWrapper: QueryWrapper<DzXiexi?>? = QueryGenerator.initQueryWrapper(dzXiexi, req.parameterMap)?.and { it.eq("media_type",type) }
+        val queryWrapper: QueryWrapper<DzXiexi?>? = QueryGenerator.initQueryWrapper(dzXiexi, req.parameterMap)
         val page = Page<DzXiexi>(pageNo, pageSize)
         val pageList = dzXiexiService.page(page, queryWrapper)
         return Result.OK(pageList)
@@ -62,8 +62,11 @@ class DzXiexiController(private val dzXiexiService: DzXiexiService) : JeecgContr
      */
     @AutoLog(value = "党政学习-添加")
     @ApiOperation(value = "党政学习-添加", notes = "党政学习-添加")
-    @PostMapping(value = ["/add"])
-    fun add(@RequestBody dzXiexi: DzXiexi): Result<*> {
+    @PostMapping(value = ["/{mediaType}/add"])
+    fun add(@PathVariable("mediaType")
+            mediaType: String,
+            @RequestBody dzXiexi: DzXiexi): Result<*> {
+        dzXiexi.mediaType = mediaType
         dzXiexiService.save(dzXiexi)
         return Result.OK("添加成功！")
     }

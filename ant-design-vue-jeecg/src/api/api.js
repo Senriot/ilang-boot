@@ -18,6 +18,7 @@ const frozenBatch = (params)=>putAction("/sys/user/frozenBatch",params);
 const checkOnlyUser = (params)=>getAction("/sys/user/checkOnlyUser",params);
 //改变密码
 const changePassword = (params)=>putAction("/sys/user/changePassword",params);
+
 //权限管理
 const addPermission= (params)=>postAction("/sys/permission/add",params);
 const editPermission= (params)=>putAction("/sys/permission/edit",params);
@@ -25,7 +26,6 @@ const getPermissionList = (params)=>getAction("/sys/permission/list",params);
 const getSystemMenuList = (params)=>getAction("/sys/permission/getSystemMenuList",params);
 const getSystemSubmenu = (params)=>getAction("/sys/permission/getSystemSubmenu",params);
 const getSystemSubmenuBatch = (params) => getAction('/sys/permission/getSystemSubmenuBatch', params)
-
 const queryTreeList = (params)=>getAction("/sys/permission/queryTreeList",params);
 const queryTreeListForRole = (params)=>getAction("/sys/role/queryTreeList",params);
 const queryListAsync = (params)=>getAction("/sys/permission/queryListAsync",params);
@@ -38,6 +38,7 @@ const queryPermissionRule = (params)=>getAction("/sys/permission/queryPermission
 
 // 部门管理
 const queryDepartTreeList = (params)=>getAction("/sys/sysDepart/queryTreeList",params);
+const queryDepartTreeSync = (params)=>getAction("/sys/sysDepart/queryDepartTreeSync",params);
 const queryIdTree = (params)=>getAction("/sys/sysDepart/queryIdTree",params);
 const queryParentName   = (params)=>getAction("/sys/sysDepart/queryParentName",params);
 const searchByKeywords   = (params)=>getAction("/sys/sysDepart/searchBy",params);
@@ -68,7 +69,7 @@ export const ajaxGetDictItems = (code, params)=>getAction(`/sys/dict/getDictItem
 function getDictItemsFromCache(dictCode) {
   if (Vue.ls.get(UI_CACHE_DB_DICT_DATA) && Vue.ls.get(UI_CACHE_DB_DICT_DATA)[dictCode]) {
     let dictItems = Vue.ls.get(UI_CACHE_DB_DICT_DATA)[dictCode];
-    console.log("-----------getDictItemsFromCache----------dictCode="+dictCode+"---- dictItems=",dictItems)
+    //console.log("-----------getDictItemsFromCache----------dictCode="+dictCode+"---- dictItems=",dictItems)
     return dictItems;
   }
 }
@@ -79,8 +80,10 @@ const doReovkeData = (params)=>getAction("/sys/annountCement/doReovkeData",param
 //获取系统访问量
 const getLoginfo = (params)=>getAction("/sys/loginfo",params);
 const getVisitInfo = (params)=>getAction("/sys/visitInfo",params);
+
 // 根据部门主键查询用户信息
 const queryUserByDepId = (params)=>getAction("/sys/user/queryUserByDepId",params);
+
 // 重复校验
 const duplicateCheck = (params)=>getAction("/sys/duplicate/check",params);
 // 加载分类字典
@@ -98,6 +101,8 @@ export const transitRESTful = {
 }
 
 export {
+  // imgView,
+  // doMian,
   addRole,
   editRole,
   checkRoleCode,
@@ -121,6 +126,7 @@ export {
   getPermissionRuleList,
   queryPermissionRule,
   queryDepartTreeList,
+  queryDepartTreeSync,
   queryIdTree,
   queryParentName,
   searchByKeywords,

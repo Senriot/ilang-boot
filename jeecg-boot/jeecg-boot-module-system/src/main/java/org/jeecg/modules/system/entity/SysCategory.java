@@ -1,17 +1,14 @@
 package org.jeecg.modules.system.entity;
 
-import java.io.Serializable;
-
-import org.apache.commons.lang.StringUtils;
-import org.jeecgframework.poi.excel.annotation.Excel;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.Data;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 
 /**
  * @Description: 分类字典
@@ -23,7 +20,7 @@ import lombok.Data;
 @TableName("sys_category")
 public class SysCategory implements Serializable,Comparable<SysCategory>{
     private static final long serialVersionUID = 1L;
-
+    
 	/**主键*/
 	@TableId(type = IdType.ASSIGN_ID)
 	private java.lang.String id;
@@ -35,10 +32,6 @@ public class SysCategory implements Serializable,Comparable<SysCategory>{
 	/**类型编码*/
 	@Excel(name = "类型编码", width = 15)
 	private java.lang.String code;
-
-	@Excel(name = "排序", width = 15)
-	private Integer          sortNo;
-
 	/**创建人*/
 	private java.lang.String createBy;
 	/**创建日期*/

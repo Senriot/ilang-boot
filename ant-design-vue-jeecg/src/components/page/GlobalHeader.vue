@@ -42,6 +42,7 @@
         <user-menu class="header-index-right" :theme="theme" :style="topMenuStyle.headerIndexRight"/>
       </div>
     </div>
+
   </a-layout-header>
 </template>
 
@@ -49,7 +50,6 @@
   import UserMenu from '../tools/UserMenu'
   import SMenu from '../menu/'
   import Logo from '../tools/Logo'
-
   import { mixin } from '@/utils/mixin.js'
 
   export default {

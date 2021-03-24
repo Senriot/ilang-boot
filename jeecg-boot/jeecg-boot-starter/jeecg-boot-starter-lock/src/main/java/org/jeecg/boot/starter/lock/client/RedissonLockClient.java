@@ -1,12 +1,11 @@
 package org.jeecg.boot.starter.lock.client;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.jeecg.boot.starter.lock.core.RedissonManager;
 import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,19 +16,20 @@ import java.util.concurrent.TimeUnit;
  * @date 2020-11-11
  */
 @Slf4j
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+@Component
 public class RedissonLockClient {
 
-    RedissonManager redissonManager;
+    @Autowired
+    private RedissonClient redissonClient;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 获取锁
      */
     public RLock getLock(String lockKey) {
-        return redissonManager.getRedisson().getLock(lockKey);
+        return redissonClient.getLock(lockKey);
     }
 
     /**
@@ -64,6 +64,25 @@ public class RedissonLockClient {
         return getLock;
     }
 
+
+    public boolean fairLock(String lockKey, TimeUnit unit, int leaseTime) {
+        RLock fairLock = redissonClient.getFairLock(lockKey);
+        try {
+            boolean existKey = existKey(lockKey);
+            // 已经存在了，就直接返回
+            if (existKey) {
+                return false;
+            }
+            return fairLock.tryLock(3, leaseTime, unit);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean existKey(String key) {
+        return redisTemplate.hasKey(key);
+    }
     /**
      * 锁lockKey
      *
@@ -96,7 +115,11 @@ public class RedissonLockClient {
      * @param lockName 锁名称
      */
     public void unlock(String lockName) {
-        redissonManager.getRedisson().getLock(lockName).unlock();
+        try {
+            redissonClient.getLock(lockName).unlock();
+        } catch (Exception e) {
+            log.error("解锁异常，lockName=" + lockName, e);
+        }
     }
 
 

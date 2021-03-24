@@ -1,4 +1,6 @@
 package org.jeecg.modules.system.service.impl;
+import	java.util.HashMap;
+import	java.util.ArrayList;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -27,6 +29,7 @@ import org.jeecg.common.util.SysAnnmentTypeEnum;
 import org.jeecg.common.util.YouBianCodeUtil;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.message.entity.SysMessageTemplate;
+import org.jeecg.modules.message.handle.impl.EmailSendMsgHandle;
 import org.jeecg.modules.message.service.ISysMessageTemplateService;
 import org.jeecg.modules.message.websocket.WebSocket;
 import org.jeecg.modules.system.entity.*;
@@ -324,7 +327,9 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 		if(map!=null) {
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				String str = "${" + entry.getKey() + "}";
-				title = title.replace(str, entry.getValue());
+				if(oConvertUtils.isNotEmpty(title)){
+					title = title.replace(str, entry.getValue());
+				}
 				content = content.replace(str, entry.getValue());
 			}
 		}
@@ -360,7 +365,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 				obj.put(WebsocketConst.MSG_USER_ID, sysUser.getId());
 				obj.put(WebsocketConst.MSG_ID, announcement.getId());
 				obj.put(WebsocketConst.MSG_TXT, announcement.getTitile());
-				webSocket.sendOneMessage(sysUser.getId(), obj.toJSONString());
+				webSocket.sendMessage(sysUser.getId(), obj.toJSONString());
 			}
 		}
 
@@ -427,7 +432,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 				obj.put(WebsocketConst.MSG_USER_ID, sysUser.getId());
 				obj.put(WebsocketConst.MSG_ID, announcement.getId());
 				obj.put(WebsocketConst.MSG_TXT, announcement.getTitile());
-				webSocket.sendOneMessage(sysUser.getId(), obj.toJSONString());
+				webSocket.sendMessage(sysUser.getId(), obj.toJSONString());
 			}
 		}
 	}
@@ -666,7 +671,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 	public void sendWebSocketMsg(String[] userIds, String cmd) {
 		JSONObject obj = new JSONObject();
 		obj.put(WebsocketConst.MSG_CMD, cmd);
-		webSocket.sendMoreMessage(userIds, obj.toJSONString());
+		webSocket.sendMessage(userIds, obj.toJSONString());
 	}
 
 	@Override
@@ -693,7 +698,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 		obj.put(WebsocketConst.MSG_CMD, WebsocketConst.CMD_SIGN);
 		obj.put(WebsocketConst.MSG_USER_ID,userId);
 		//TODO 目前全部推送，后面修改
-		webSocket.sendAllMessage(obj.toJSONString());
+		webSocket.sendMessage(obj.toJSONString());
 	}
 
 	@Override
@@ -853,6 +858,13 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 		return JSON.parseArray(JSON.toJSONString(userMapper.selectList(queryWrapper))).toJavaList(JSONObject.class);
 	}
 
+	@Override
+	public List<JSONObject> queryUsersByIds(String ids) {
+		LambdaQueryWrapper<SysUser> queryWrapper =  new LambdaQueryWrapper<>();
+		queryWrapper.in(SysUser::getId,ids.split(","));
+		return JSON.parseArray(JSON.toJSONString(userMapper.selectList(queryWrapper))).toJavaList(JSONObject.class);
+	}
+
 	/**
 	 * 37根据多个部门编码(逗号分隔)，查询返回多个部门信息
 	 * @param usernames
@@ -862,6 +874,13 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 	public List<JSONObject> queryDepartsByOrgcodes(String orgCodes) {
 		LambdaQueryWrapper<SysDepart> queryWrapper =  new LambdaQueryWrapper<>();
 		queryWrapper.in(SysDepart::getOrgCode,orgCodes.split(","));
+		return JSON.parseArray(JSON.toJSONString(sysDepartService.list(queryWrapper))).toJavaList(JSONObject.class);
+	}
+
+	@Override
+	public List<JSONObject> queryDepartsByIds(String ids) {
+		LambdaQueryWrapper<SysDepart> queryWrapper =  new LambdaQueryWrapper<>();
+		queryWrapper.in(SysDepart::getId,ids.split(","));
 		return JSON.parseArray(JSON.toJSONString(sysDepartService.list(queryWrapper))).toJavaList(JSONObject.class);
 	}
 
@@ -905,7 +924,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 				obj.put(WebsocketConst.MSG_USER_ID, sysUser.getId());
 				obj.put(WebsocketConst.MSG_ID, announcement.getId());
 				obj.put(WebsocketConst.MSG_TXT, announcement.getTitile());
-				webSocket.sendOneMessage(sysUser.getId(), obj.toJSONString());
+				webSocket.sendMessage(sysUser.getId(), obj.toJSONString());
 			}
 		}
 
@@ -957,8 +976,59 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 				obj.put(WebsocketConst.MSG_USER_ID, sysUser.getId());
 				obj.put(WebsocketConst.MSG_ID, announcement.getId());
 				obj.put(WebsocketConst.MSG_TXT, announcement.getTitile());
-				webSocket.sendOneMessage(sysUser.getId(), obj.toJSONString());
+				webSocket.sendMessage(sysUser.getId(), obj.toJSONString());
 			}
 		}
 	}
+
+	/**
+	 * 发送邮件消息
+	 * @param email
+	 * @param title
+	 * @param content
+	 */
+	@Override
+	public void sendEmailMsg(String email, String title, String content) {
+			EmailSendMsgHandle emailHandle=new EmailSendMsgHandle();
+			emailHandle.SendMsg(email, title, content);
+	}
+
+	/**
+	 * 获取公司下级部门和所有用户id信息
+	 * @param orgCode
+	 * @return
+	 */
+	@Override
+	public List<Map> getDeptUserByOrgCode(String orgCode) {
+		//1.获取公司信息
+		SysDepart comp=sysDepartService.queryCompByOrgCode(orgCode);
+		if(comp!=null){
+			//2.获取公司下级部门
+			List<SysDepart> departs=sysDepartService.queryDeptByPid(comp.getId());
+			//3.获取部门下的人员信息
+			 List<Map> list=new ArrayList();
+			 //4.处理部门和下级用户数据
+			for (SysDepart dept:departs) {
+				Map map=new HashMap();
+				//部门名称
+				String departName = dept.getDepartName();
+				//根据部门编码获取下级部门id
+				List<String> listIds = departMapper.getSubDepIdsByDepId(dept.getId());
+				//根据下级部门ids获取下级部门的所有用户
+				List<SysUserDepart> userList = sysUserDepartService.list(new QueryWrapper<SysUserDepart>().in("dep_id",listIds));
+				List<String> userIds = new ArrayList<>();
+				for(SysUserDepart userDepart : userList){
+					if(!userIds.contains(userDepart.getUserId())){
+						userIds.add(userDepart.getUserId());
+					}
+				}
+				map.put("name",departName);
+				map.put("ids",userIds);
+				list.add(map);
+			}
+			return list;
+		}
+		return null;
+	}
+
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -387,10 +388,40 @@ public interface ISysBaseAPI extends CommonAPI {
     List<JSONObject> queryUsersByUsernames(String usernames);
 
     /**
-     * 37根据多个部门编码(逗号分隔)，查询返回多个部门信息
+     * 37根据多个用户ID(逗号分隔)，查询返回多个用户信息
+     * @param ids
+     * @return
+     */
+    @GetMapping("/sys/api/queryUsersByIds")
+    List<JSONObject> queryUsersByIds(String ids);
+
+    /**
+     * 38根据多个部门编码(逗号分隔)，查询返回多个部门信息
      * @param orgCodes
      * @return
      */
     @GetMapping("/sys/api/queryDepartsByOrgcodes")
     List<JSONObject> queryDepartsByOrgcodes(String orgCodes);
+    /**
+     * 39根据多个部门编码(逗号分隔)，查询返回多个部门信息
+     * @param ids
+     * @return
+     */
+    @GetMapping("/sys/api/queryDepartsByOrgIds")
+    List<JSONObject> queryDepartsByOrgIds(String ids);
+    
+    /**
+     * 40发送邮件消息
+     * @param email
+     * @param title
+     * @param content
+     */
+    @GetMapping("/sys/api/sendEmailMsg")
+    void sendEmailMsg(@RequestParam("email")String email,@RequestParam("title")String title,@RequestParam("content")String content);
+    /**
+     * 41 获取公司下级部门和公司下所有用户id
+     * @param orgCode
+     */
+    @GetMapping("/sys/api/getDeptUserByOrgCode")
+    List<Map> getDeptUserByOrgCode(@RequestParam("orgCode")String orgCode);
 }

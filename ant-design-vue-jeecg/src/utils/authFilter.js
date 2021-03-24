@@ -9,10 +9,10 @@ export function disabledAuthFilter(code,formData) {
 }
 
 function nodeDisabledAuth(code,formData){
-  console.log("页面权限禁用--NODE--开始");
+  //console.log("页面权限禁用--NODE--开始");
   let permissionList = [];
   try {
-    console.log("页面权限禁用--NODE--开始",formData);
+    //console.log("页面权限禁用--NODE--开始",formData);
     if (formData) {
       let bpmList = formData.permissionList;
       permissionList = bpmList.filter(item=>item.type=='2')
@@ -53,7 +53,7 @@ function nodeDisabledAuth(code,formData){
 }
 
 function globalDisabledAuth(code){
-  console.log("全局页面禁用权限--Global--开始");
+  //console.log("全局页面禁用权限--Global--开始");
 
   let permissionList = [];
   let allPermissionList = [];
@@ -106,7 +106,7 @@ function globalDisabledAuth(code){
   }else{
     for (let item2 of permissionList) {
       if(code === item2.action){
-        console.log("全局页面权限解除禁用--Global--生效");
+        //console.log("全局页面权限解除禁用--Global--生效");
         gFlag = false;
       }
     }
@@ -204,6 +204,37 @@ export function getNoAuthCols(pre){
     return true;
   })
   return cols;
+}
+
+/**
+ * 将Online的行编辑按钮权限，添加至本地存储
+ */
+export function addOnlineBtAuth2Storage(pre, authList){
+  let allAuthList = JSON.parse(sessionStorage.getItem(SYS_BUTTON_AUTH) || "[]");
+  let newAuthList = allAuthList.filter(item=>{
+    if(!item.action){
+      return true
+    }
+    return item.action.indexOf(pre)<0
+  })
+  if(authList && authList.length>0){
+    for(let item of authList){
+      newAuthList.push({
+        action: pre+item,
+        type:1,
+        status:1
+      })
+    }
+    let temp = JSON.parse(sessionStorage.getItem(USER_AUTH) || "[]");
+    let newArr = temp.filter(item=>{
+      if(!item.action){
+        return true
+      }
+      return item.action.indexOf(pre)<0 || authList.indexOf(item.action.replace(pre, ''))<0
+    })
+    sessionStorage.setItem(USER_AUTH, JSON.stringify(newArr))
+  }
+  sessionStorage.setItem(SYS_BUTTON_AUTH, JSON.stringify(newAuthList))
 }
 
 

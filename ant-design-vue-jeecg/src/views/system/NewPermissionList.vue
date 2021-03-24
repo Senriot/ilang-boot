@@ -192,12 +192,14 @@
             if (res.success) {
               let childrenMap = res.result
               let fn = (list) => {
-                list.forEach(data => {
-                  if (this.expandedRowKeys.includes(data.id)) {
-                    data.children = childrenMap[data.id]
-                    fn(data.children)
-                  }
-                })
+                if(list&&list.length>0){
+                  list.forEach(data => {
+                    if (this.expandedRowKeys.includes(data.id)) {
+                      data.children = childrenMap[data.id]
+                      fn(data.children)
+                    }
+                  })
+                } 
               }
               fn(dataList)
             }
@@ -212,9 +214,8 @@
       },
       handleAddSub(record) {
         this.$refs.modalForm.title = "添加子菜单";
-        this.$refs.modalForm.localMenuType = 1;
         this.$refs.modalForm.disableSubmit = false;
-        this.$refs.modalForm.edit({status:'1',permsType:'1',route:true,'parentId':record.id});
+        this.$refs.modalForm.edit({status:'1',permsType:'1',route:true,'parentId':record.id,menuType:1});
       },
       handleExpandedRowsChange(expandedRows) {
         this.expandedRowKeys = expandedRows

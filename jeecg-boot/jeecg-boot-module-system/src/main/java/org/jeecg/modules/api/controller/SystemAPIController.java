@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -482,12 +483,51 @@ public class SystemAPIController {
     }
 
     /**
-     * 37根据多个部门编码(逗号分隔)，查询返回多个部门信息
+     * 37根据多个用户id(逗号分隔)，查询返回多个用户信息
+     * @param usernames
+     * @return
+     */
+    @GetMapping("/queryUsersByIds")
+    List<JSONObject> queryUsersByIds(String ids){
+        return this.sysBaseAPI.queryUsersByIds(ids);
+    }
+
+    /**
+     * 38根据多个部门编码(逗号分隔)，查询返回多个部门信息
      * @param orgCodes
      * @return
      */
     @GetMapping("/queryDepartsByOrgcodes")
     List<JSONObject> queryDepartsByOrgcodes(String orgCodes){
         return this.sysBaseAPI.queryDepartsByOrgcodes(orgCodes);
+    }
+
+    /**
+     * 39根据多个部门ID(逗号分隔)，查询返回多个部门信息
+     * @param orgCodes
+     * @return
+     */
+    @GetMapping("/queryDepartsByIds")
+    List<JSONObject> queryDepartsByIds(String orgCodes){
+        return this.sysBaseAPI.queryDepartsByIds(orgCodes);
+    }
+
+    /**
+     * 40发送邮件消息
+     * @param email
+     * @param title
+     * @param content
+     */
+    @GetMapping("/sendEmailMsg")
+    public void sendEmailMsg(@RequestParam("email")String email,@RequestParam("title")String title,@RequestParam("content")String content){
+         this.sysBaseAPI.sendEmailMsg(email,title,content);
+    };
+    /**
+     * 41 获取公司下级部门和公司下所有用户信息
+     * @param orgCode
+     */
+    @GetMapping("/getDeptUserByOrgCode")
+    List<Map> getDeptUserByOrgCode(@RequestParam("orgCode")String orgCode){
+       return this.sysBaseAPI.getDeptUserByOrgCode(orgCode);
     }
 }

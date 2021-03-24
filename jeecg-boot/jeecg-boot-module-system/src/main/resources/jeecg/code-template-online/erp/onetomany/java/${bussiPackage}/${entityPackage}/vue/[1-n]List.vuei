@@ -84,13 +84,11 @@
 
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import ${sub.entityName}Modal from './modules/${sub.entityName}Modal'
-  import JSuperQuery from '@/components/jeecg/JSuperQuery.vue'
-
 
   export default {
     name: "${sub.entityName}List",
     mixins:[JeecgListMixin],
-    components: { ${sub.entityName}Modal,JSuperQuery },
+    components: { ${sub.entityName}Modal },
     props:{
       mainId:{
         type:String,
@@ -159,7 +157,7 @@
             dataIndex: '${po.fieldName}_dictText',
 			<#elseif po.classType=='switch'>
             dataIndex: '${po.fieldName}',
-            <#if po.dictField?default("")?trim?length gt 1>
+            <#if po.dictField != 'is_open'>
             customRender: (text) => (!text ? "" : (text == ${po.dictField}[0] ? "是" : "否"))
             <#else>
             customRender: (text) => (!text ? "" : (text == "Y" ? "是" : "否"))

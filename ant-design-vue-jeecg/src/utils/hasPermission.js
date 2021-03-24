@@ -5,7 +5,7 @@ const hasPermission = {
           //console.log(options);
           Vue.directive('has', {
             inserted: (el, binding, vnode)=>{
-                console.log("页面权限控制----");
+                //console.log("页面权限控制----");
                 //console.time()
                 //节点权限处理，如果命中则不进行全局权限处理
                 if(!filterNodePermission(el, binding, vnode)){
@@ -68,7 +68,7 @@ export function filterNodePermission(el, binding, vnode) {
  * 全局权限控制
  */
 export function filterGlobalPermission(el, binding, vnode) {
-  console.log("全局页面权限--Global--");
+  //console.log("全局页面权限--Global--");
 
   let permissionList = [];
   let allPermissionList = [];
@@ -108,6 +108,7 @@ export function filterGlobalPermission(el, binding, vnode) {
   }
   let permissions = [];
   for (let item of permissionList) {
+    //权限策略1显示2禁用
     if(item.type != '2'){
       //update--begin--autor:wangshuai-----date:20200729------for：按钮权限，授权标识的提示信息是多个用逗号分隔逻辑处理 gitee#I1OUGU-------
       if(item.action){

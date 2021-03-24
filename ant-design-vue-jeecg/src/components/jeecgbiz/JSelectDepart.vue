@@ -53,6 +53,11 @@
       customReturnField: {
         type: String,
         default: 'id'
+      },
+      backDepart: {
+        type: Boolean,
+        default: false,
+        required: false
       }
     },
     data(){
@@ -91,6 +96,23 @@
         }
         //update-end-author:lvdandan date:20200513 for:TESTA-438 部门选择组件自定义返回值，数据无法回填
       },
+      //返回选中的部门信息
+      backDeparInfo(){
+        if(this.backDepart===true){
+          if(this.departIds && this.departIds.length>0){
+            let arr1 = this.departIds.split(',')
+            let arr2 = this.departNames.split(',')
+            let info = []
+            for(let i=0;i<arr1.length;i++){
+              info.push({
+                value: arr1[i],
+                text: arr2[i]
+              })
+            }
+            this.$emit('back', info)
+          }
+        }
+      },
       openModal(){
         this.$refs.innerDepartSelectModal.show()
       },
@@ -105,6 +127,7 @@
           this.departIds = idstr
         }
         this.$emit("change", value)
+        this.backDeparInfo()
       },
       getDepartNames(){
         return this.departNames

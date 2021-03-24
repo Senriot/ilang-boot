@@ -124,7 +124,7 @@
           },
         },
         url: {
-          add: "/ilang/dzXiexi/add",
+          add: "/ilang/dzXiexi/video/add",
           edit: "/ilang/dzXiexi/edit",
           queryById: "/ilang/dzXiexi/queryById"
         }

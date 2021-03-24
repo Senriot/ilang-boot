@@ -83,6 +83,11 @@ data class DzXiexi(
         @Excel(name = "音频地址", width = 15.0)
         @ApiModelProperty(value = "音频地址")
         var audioUrl: String? = null,
+
+
+        @Excel(name = "文件名", width = 15.0)
+        @ApiModelProperty(value = "文件名")
+        var fileName: String? = null,
         /**
          * 背景图片
          */
